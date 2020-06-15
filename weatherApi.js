@@ -6,3 +6,4 @@ getWeather = async () => {
         console.log(`didn't work because ${err}`);
     }
 }
+
