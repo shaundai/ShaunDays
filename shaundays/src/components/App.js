@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import TodaysForecast from './TodaysForecast'
 import WeatherApi from './util/weatherApi';
+require('dotenv').config()
 
 
 function App() {
