@@ -3,15 +3,13 @@ import './App.css';
 import TodaysForecast from './TodaysForecast'
 import WeatherApi from './util/weatherApi';
 
+
 function App() {
   const [mariettaWeather, setMariettaWeather] = useState('')
 
-  const handleOnClick = () => {
-    // setMariettaWeather(WeatherApi.getWeather())
-    WeatherApi.getWeather().then(response => {
-      console.log(response.data.currently.summary)
-    })
-  }
+  const findWeather = () => {
+    console.log(WeatherApi.getSummary())
+    }
 
   return (
     <div className="App">
@@ -20,8 +18,8 @@ function App() {
           Weather App
         </h1>
         <h1>{mariettaWeather}</h1>
-        <button onClick={handleOnClick}>{mariettaWeather}</button>
-        <TodaysForecast mariettaWeather={mariettaWeather} onClick={handleOnClick} />
+        <button onClick={findWeather}>{mariettaWeather}</button>
+        <TodaysForecast />
       </header>
     </div>
   );

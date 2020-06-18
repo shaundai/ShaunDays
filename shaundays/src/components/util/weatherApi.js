@@ -8,11 +8,9 @@ const WeatherApi = {
 
     getSummary() {
         WeatherApi.getWeather().then(response => {
-        console.log(response.data.currently.summary)
+        return(response.data.currently.summary)
     })
     } 
 }
 
-WeatherApi.getSummary()
-
-//export default WeatherApi;
+export default WeatherApi;
