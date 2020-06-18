@@ -10,3 +10,4 @@ const getWeather = async () => {
     }
 }
 
+getWeather()
