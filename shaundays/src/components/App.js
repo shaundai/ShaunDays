@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import './App.css';
 import TodaysForecast from './TodaysForecast'
-import WeatherApi from './util/weatherApi';
+import getWeather from './util/weatherApi';
 require('dotenv').config()
 
 
 function App() {
   const [mariettaWeather, setMariettaWeather] = useState('')
 
-  const findWeather = () => {
-    console.log(WeatherApi.getSummary())
-    }
+  const getSummary = () => {
+    getWeather().then(response => {
+      return(response.data.currently.summary)})
+    setMariettaWeather(summary);
+  } 
 
   return (
     <div className="App">
@@ -19,7 +21,7 @@ function App() {
           Weather App
         </h1>
         <h1>{mariettaWeather}</h1>
-        <button onClick={findWeather}>{mariettaWeather}</button>
+        <button onClick={getSummary}>{mariettaWeather}</button>
         <TodaysForecast />
       </header>
     </div>
