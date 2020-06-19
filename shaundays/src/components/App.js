@@ -2,17 +2,27 @@ import React, { useState } from 'react';
 import './App.css';
 import TodaysForecast from './TodaysForecast'
 import getWeather from './util/weatherApi';
+const axios = require('axios');
+import convertTimestampToTime from './util/utilities';
 require('dotenv').config()
 
 
 function App() {
-  const [mariettaWeather, setMariettaWeather] = useState('')
+  const [mariettaWeather, setMariettaWeather] = useState({})
 
-  const getSummary = () => {
-    getWeather().then(response => {
-      return(response.data.currently.summary)})
-    setMariettaWeather(summary);
-  } 
+  const getSummary = async () => {
+    try {
+    const weather = (await getWeather()).data.currently
+    setMariettaWeather(weather)
+    }
+    catch(err){
+      console.log(`My error code is ${err.status}.  I errored out bc ${err}`)
+    }
+  }
+
+  const getTime = (time) => {
+    
+  }
 
   return (
     <div className="App">
@@ -20,8 +30,9 @@ function App() {
         <h1>
           Weather App
         </h1>
-        <h1>{mariettaWeather}</h1>
-        <button onClick={getSummary}>{mariettaWeather}</button>
+        <h2>Marietta Weather</h2> 
+        <h1>{mariettaWeather.time}</h1>
+        <button onClick={getSummary}>Get Weather</button>
         <TodaysForecast />
       </header>
     </div>
