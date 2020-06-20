@@ -9,3 +9,12 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.mainWeatherIcon {
+  padding-top: 0;
+  margin: 1em auto;
+  margin-bottom: 1em;
+  height: 5em;
+  width: 5em;
+  display: block;
+}
