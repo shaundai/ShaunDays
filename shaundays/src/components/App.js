@@ -26,6 +26,8 @@ export default function App() {
     try {
     const fiveDayWeather = (await getWeather()).data.daily.data
     setFiveDayForecast(fiveDayWeather);
+    const displayFiveDay = (await showFiveDay(fiveDayWeather));
+    displayFiveDay();
     }
     catch(err){
       console.log(`My error code is ${err.status}.  I errored out bc ${err}`)
