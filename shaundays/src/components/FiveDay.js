@@ -3,14 +3,23 @@ import styled from 'styled-components';
 
 
 function FiveDay({list}) {
+
+    const getDayOfWeek = (unix) => {
+        const convertDayOfWeek = ['Monday','Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        const divideBySeconds = unix / 86400
+        const findDayAfterUnix = Math.floor(divideBySeconds + 3)
+        const findDayOfWeekNumber = findDayAfterUnix % 7
+        return convertDayOfWeek[findDayOfWeekNumber];
+    }
+
     return (
-        <div>
+        <div style={{width: '100%'}}>
         <h1>Five Day Forecast: Marietta</h1> 
         <ul style={{listStyleType: 'none', display: 'flex', }}>
         {list.slice(0,5).map(item => (
         <li key={item.time}>
-        <div style={{backgroundColor: 'gray', borderRadius: 20, padding: 15, alignItems: 'center', justifyContent: 'center'}}>
-          <h2 style={{fontSize: '1rem', marginTop: 10, paddingTop: 0}}>Marietta, GA</h2> 
+        <div style={{backgroundColor: 'gray', borderRadius: 20, padding: 15, alignItems: 'center', justifyContent: 'center', width: '100%'}}>
+          <h2 style={{fontSize: '1rem', marginTop: 10, paddingTop: 0}}>{getDayOfWeek(item.time)}</h2> 
           <Highlow>{item.summary}</Highlow>
           {item.icon ? <img className="mainWeatherIcon" src={require(`../images/${item.icon}.png`)} alt={item.icon}></img> : null}
           {item.temperatureHigh ? <Highlow><b>High: </b>{item.temperatureHigh} F</Highlow> : null}
