@@ -26,20 +26,14 @@ export default function App() {
     try {
     const fiveDayWeather = (await getWeather()).data.daily.data
     setFiveDayForecast(fiveDayWeather);
-    const displayFiveDay = (await showFiveDay(fiveDayWeather));
-    displayFiveDay();
+    setGetFiveDayOn(true);
     }
     catch(err){
       console.log(`My error code is ${err.status}.  I errored out bc ${err}`)
     }
   }
 
-  const showFiveDay = (forecast) => {
-    const fiveDay = fiveDayForecast.map(item => {
-      return <FiveDay summary={item.summary} icon={item.icon} temperature={item.temperatureHigh} />
-    });
-    return fiveDay;
-  }
+
 
   return (
     <div className="App">
@@ -56,9 +50,9 @@ export default function App() {
           <div>{mariettaWeather.summary}</div>
           {mariettaWeather.icon ? <img className="mainWeatherIcon" src={require(`../images/${mariettaWeather.icon}.png`)}></img> : null}
           {mariettaWeather.temperature ? <div>{mariettaWeather.temperature} F</div> : null}
-          {getFiveDayOn ? <button onClick={getFiveDay}>Get Five Day Forecast</button> : <button onClick={getSummary}>Get Today's Weather</button>}
+          {getFiveDayOn ? <button onClick={getFiveDay} >Get Five Day Forecast</button> : <button onClick={getSummary}>Get Today's Weather</button>}
         </div>
-        {getFiveDayOn ? <FiveDay weather={mariettaWeather} /> : null}
+        {fiveDayForecast[0] ? <FiveDay list={fiveDayForecast} /> : null}
     </div>
   );
 }
