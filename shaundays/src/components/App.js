@@ -27,6 +27,7 @@ export default function App() {
     const fiveDayWeather = (await getWeather()).data.daily.data
     setFiveDayForecast(fiveDayWeather);
     setGetFiveDayOn(true);
+    console.log(fiveDayWeather)
     }
     catch(err){
       console.log(`My error code is ${err.status}.  I errored out bc ${err}`)
@@ -48,7 +49,7 @@ export default function App() {
         <div style={{backgroundColor: 'gray', borderRadius: 20, padding: 15, alignItems: 'center', justifyContent: 'center'}}>
           <h2 style={{fontSize: '1.5rem', marginTop: 10, paddingTop: 0}}>Marietta, GA</h2> 
           <div>{mariettaWeather.summary}</div>
-          {mariettaWeather.icon ? <img className="mainWeatherIcon" src={require(`../images/${mariettaWeather.icon}.png`)}></img> : null}
+          {mariettaWeather.icon ? <img className="mainWeatherIcon" src={require(`../images/${mariettaWeather.icon}.png`)} alt={mariettaWeather.icon}></img> : null}
           {mariettaWeather.temperature ? <div>{mariettaWeather.temperature} F</div> : null}
           {getFiveDayOn ? <button onClick={getFiveDay} >Get Five Day Forecast</button> : <button onClick={getSummary}>Get Today's Weather</button>}
         </div>
