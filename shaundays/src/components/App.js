@@ -15,7 +15,8 @@ export default function App() {
     try {
     const weather = (await getWeather()).data.currently
     setMariettaWeather(weather);
-    setGetFiveDayOn(true)
+    setGetFiveDayOn(true);
+    console.log(weather)
     }
     catch(err){
       console.log(`My error code is ${err.status}.  I errored out bc ${err}`)
@@ -27,7 +28,6 @@ export default function App() {
     const fiveDayWeather = (await getWeather()).data.daily.data
     setFiveDayForecast(fiveDayWeather);
     setGetFiveDayOn(true);
-    console.log(fiveDayWeather)
     }
     catch(err){
       console.log(`My error code is ${err.status}.  I errored out bc ${err}`)
@@ -47,11 +47,11 @@ export default function App() {
 
         <div style={{fontSize: '2rem', marginTop: -2, marginBottom: '1em', paddingTop: 0, color: '#317873'}}>Weather App</div>
         <div style={{backgroundColor: 'gray', borderRadius: 20, padding: 15, alignItems: 'center', justifyContent: 'center'}}>
-          <h2 style={{fontSize: '1.5rem', marginTop: 10, paddingTop: 0}}>Marietta, GA</h2> 
-          <div>{mariettaWeather.summary}</div>
-          {mariettaWeather.icon ? <img className="mainWeatherIcon" src={require(`../images/${mariettaWeather.icon}.png`)} alt={mariettaWeather.icon}></img> : null}
-          {mariettaWeather.temperature ? <div>{mariettaWeather.temperature} F</div> : null}
-          {getFiveDayOn ? <button onClick={getFiveDay} >Get Five Day Forecast</button> : <button onClick={getSummary}>Get Today's Weather</button>}
+          {mariettaWeather.time ? <h2 style={{fontSize: '1.5rem', marginTop: 10, paddingTop: 0, marginBottom: 0}}>Marietta, GA</h2> : null} 
+          <div style={{marginTop: 0}}>{mariettaWeather.summary}</div>
+          {mariettaWeather.icon ? <img className="mainWeatherIcon" src={require(`../images/${mariettaWeather.icon}.png`)} alt={mariettaWeather.icon} style={{margin: '0 auto'}}></img> : null}
+          {mariettaWeather.temperature ? <div style={{paddingBottom: '.5em'}}>{mariettaWeather.temperature} F</div> : null}
+          {getFiveDayOn ? <GetButton onClick={getFiveDay} >Get Five Day Forecast</GetButton> : <GetButton onClick={getSummary}>Get Today's Weather</GetButton>}
         </div>
         {fiveDayForecast[0] ? <FiveDay list={fiveDayForecast} /> : null}
     </div>
@@ -77,4 +77,11 @@ const Grayrectangle = styled.div`
   bottom: .8rem;
   opacity: 0.5;
   margin-bottom: -2;
+`
+
+const GetButton = styled.button`
+  border-radius: .5em;
+  padding: 6px;
+  background-color: lightgray;
+  border: none;
 `

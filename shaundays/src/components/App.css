@@ -18,3 +18,12 @@
   width: 5em;
   display: block;
 }
+
+.fiveDayWeatherIcon {
+  padding-top: 0;
+  margin: 1em auto;
+  margin-bottom: 1em;
+  height: 3.5em;
+  width: 3.5em;
+  display: block;
+}
