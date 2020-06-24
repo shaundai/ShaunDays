@@ -22,8 +22,8 @@ function FiveDay({list}) {
           <h2 style={{fontSize: '1rem', marginTop: 10, paddingTop: 0}}>{getDayOfWeek(item.time)}</h2> 
           <Highlow>{item.summary}</Highlow>
           {item.icon ? <img className="fiveDayWeatherIcon" src={require(`../images/${item.icon}.png`)} alt={item.icon}></img> : null}
-          {item.temperatureHigh ? <Highlow><b>High: </b>{item.temperatureHigh} F</Highlow> : null}
-          {item.temperatureLow ? <Highlow><b>Low: </b>{item.temperatureLow} F</Highlow> : null}
+          {item.temperatureHigh ? <Highlow><b>High: </b>{Math.trunc(item.temperatureHigh)}°F</Highlow> : null}
+          {item.temperatureLow ? <Highlow><b>Low: </b>{Math.trunc(item.temperatureLow)}°F</Highlow> : null}
         </div>
         </li>
         ))}
