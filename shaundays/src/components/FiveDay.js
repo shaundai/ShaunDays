@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {useChain, animated} from 'react-spring'
 
 
 function FiveDay({list}) {
@@ -13,17 +14,18 @@ function FiveDay({list}) {
     }
 
     return (
-        <div style={{width: '100%'}}>
-        <h1 style={{marginTop: '1.5em', fontSize: '1.2em'}}>Five Day Forecast: Marietta</h1> 
-        <ul style={{listStyleType: 'none', display: 'flex', justifyContent: 'space-evenly'}}>
+        <div>
+        <ul style={{listStyleType: 'none', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', margin: 0, padding: '0 1em', height: '100%'}}>
         {list.slice(1,6).map(item => (
-        <li key={item.time} style={{ width: '15%'}}>
-        <div style={{backgroundColor: 'gray', borderRadius: 20, padding: 15, alignItems: 'center', justifyContent: 'center'}}>
-          <h2 style={{fontSize: '1rem', marginTop: 10, paddingTop: 0}}>{getDayOfWeek(item.time)}</h2> 
-          <Highlow>{item.summary}</Highlow>
+        <li key={item.time}>
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', margin: 0}}>
+            <div style={{display: 'flex', justifyContent: 'flex-start', width: '35%'}}>
+                <h2 style={{fontSize: '1rem', marginTop: 10, paddingTop: 0, float: 'left'}}>{getDayOfWeek(item.time)}</h2>
+            </div>
           {item.icon ? <img className="fiveDayWeatherIcon" src={require(`../images/${item.icon}.png`)} alt={item.icon}></img> : null}
-          {item.temperatureHigh ? <Highlow><b>High: </b>{Math.trunc(item.temperatureHigh)}°F</Highlow> : null}
+          <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>{item.temperatureHigh ? <Highlow><b>High: </b>{Math.trunc(item.temperatureHigh)}°F</Highlow> : null}
           {item.temperatureLow ? <Highlow><b>Low: </b>{Math.trunc(item.temperatureLow)}°F</Highlow> : null}
+          </div>
         </div>
         </li>
         ))}
