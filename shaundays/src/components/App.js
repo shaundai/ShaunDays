@@ -3,7 +3,11 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import styled from 'styled-components';
 import getWeather from './util/weatherApi';
+<<<<<<< HEAD
 import getGeoData from './util/googleMapsApi';
+=======
+import getLatLong from './util/googleMapsApi';
+>>>>>>> befe47adb47877cbc1fb388ec8be1e74ff1c3732
 import FiveDay from './FiveDay';
 require('dotenv').config()
 
