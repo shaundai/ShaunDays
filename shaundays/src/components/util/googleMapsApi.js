@@ -1,4 +1,4 @@
-import { googleMapsApiKey } from './googleApi2'
+import { googleMapsApiKey } from './googleMapsApiKey'
 
 require("dotenv").config();
 
