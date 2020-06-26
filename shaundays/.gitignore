@@ -5,6 +5,7 @@
 .env
 /.pnp
 .pnp.js
+/src/components/util/googleApi2.js
 
 # testing
 /coverage
