@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import './App.css';
 import styled from 'styled-components';
 import getWeather from './util/weatherApi';
+import getLatLong from './util/googleMapsApi';
 import FiveDay from './FiveDay';
 require('dotenv').config()
 
-
 export default function App() {
+  const [cityState, setCityState] = useState({})
   const [mariettaWeather, setMariettaWeather] = useState({})
   const [getFiveDayOn, setGetFiveDayOn] = useState(false)
   const [fiveDayForecast, setFiveDayForecast] = useState({})
