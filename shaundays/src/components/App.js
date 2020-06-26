@@ -1,16 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './App.css';
 import styled from 'styled-components';
 import getWeather from './util/weatherApi';
+import getGeoData from './util/googleMapsApi';
 import FiveDay from './FiveDay';
 require('dotenv').config()
 
-
 export default function App() {
+  const [location, setLocation] = useState({city: 'city', state: 'state'})
+  const [latLong, setLatLong] = useState({lat: '', long: ''})
   const [mariettaWeather, setMariettaWeather] = useState({})
   const [getFiveDayOn, setGetFiveDayOn] = useState(false)
   const [fiveDayForecast, setFiveDayForecast] = useState({})
+
+
+  useEffect(() => {
+  console.log(latLong)}, [latLong])
+
+  const updateLatLong = async () => {
+    try {
+      const _location = (await getGeoData()).data.results[0].geometry.location
+      setLatLong({lat: _location.lat, long: _location.lng})
+      
+    }
+    catch(err){
+      console.log(`My error code is ${err.status}.  I errored out bc ${err}`)
+    }
+  }
+
+  //what happens when getlatlong fails? don't want weatherapi to call
 
   const getSummary = async () => {
     try {
@@ -46,7 +65,9 @@ export default function App() {
         </div>
         <Grayrectangle />
         <div style={{fontSize: '2rem', marginTop: -2, marginBottom: '1em', paddingTop: 0, color: '#317873'}}>Weather App</div>
-        
+        <input type="text" value={location.city} onChange={e => {setLocation({...location, city: e.target.value})}}></input>
+        <input type="text" value={location.state} onChange={e => {setLocation({...location, state: e.target.value})}}></input>
+        <button onClick={updateLatLong}>Get Weather</button>
         <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center'}}>
         <div style={{backgroundColor: 'gray', borderRadius: 20, padding: 15, alignItems: 'center', justifyContent: 'center'}} className="shadow">
           {mariettaWeather.time ? <h2 style={{fontSize: '1.5rem', marginTop: 10, paddingTop: 0, marginBottom: 0}}>Marietta, GA</h2> : <p style={{fontSize: '.8em', fontWeight: 700}}>Click below for today's weather</p>} 
