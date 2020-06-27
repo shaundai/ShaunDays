@@ -22,7 +22,6 @@ export default function App() {
     try {
       const _location = (await getGeoData()).data.results[0].geometry.location
       setLatLong({lat: _location.lat, long: _location.lng})
-      
     }
     catch(err){
       console.log(`My error code is ${err.status}.  I errored out bc ${err}`)
@@ -33,7 +32,7 @@ export default function App() {
 
   const getSummary = async () => {
     try {
-    const weather = (await getWeather()).data.currently
+    const weather = (await getWeather(latLong.lat, latLong.long)).data.currently
     setMariettaWeather(weather);
     setGetFiveDayOn(true);
     console.log(weather)
@@ -65,7 +64,7 @@ export default function App() {
         </div>
         <Grayrectangle />
         <div style={{fontSize: '2rem', marginTop: -2, marginBottom: '1em', paddingTop: 0, color: '#317873'}}>Weather App</div>
-        <input type="text" value={location.city} onChange={e => {setLocation({...location, city: e.target.value})}}></input>
+        <input type="text" value={location.city} onChange={e => {setLocation({...location, city: e.target.value}); console.log(location)}}></input>
         <input type="text" value={location.state} onChange={e => {setLocation({...location, state: e.target.value})}}></input>
         <button onClick={updateLatLong}>Get Weather</button>
         <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center'}}>
