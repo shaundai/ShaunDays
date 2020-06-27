@@ -8,7 +8,7 @@ import FiveDay from './FiveDay';
 require('dotenv').config()
 
 export default function App() {
-  const [location, setLocation] = useState({city: 'city', state: 'state'})
+  const [location, setLocation] = useState({city: '', state: ''})
   const [latLong, setLatLong] = useState({lat: '', long: ''})
   const [mariettaWeather, setMariettaWeather] = useState({})
   const [getFiveDayOn, setGetFiveDayOn] = useState(false)
@@ -20,7 +20,7 @@ export default function App() {
 
   const updateLatLong = async () => {
     try {
-      const _location = (await getGeoData()).data.results[0].geometry.location
+      const _location = (await getGeoData(location.city, location.state)).data.results[0].geometry.location
       setLatLong({lat: _location.lat, long: _location.lng})
     }
     catch(err){
@@ -44,7 +44,7 @@ export default function App() {
 
   const getFiveDay = async () => {
     try {
-    const fiveDayWeather = (await getWeather()).data.daily.data
+    const fiveDayWeather = (await getWeather(latLong.lat, latLong.long)).data.daily.data
     setFiveDayForecast(fiveDayWeather);
     setGetFiveDayOn(true);
     }
@@ -64,9 +64,13 @@ export default function App() {
         </div>
         <Grayrectangle />
         <div style={{fontSize: '2rem', marginTop: -2, marginBottom: '1em', paddingTop: 0, color: '#317873'}}>Weather App</div>
-        <input type="text" value={location.city} onChange={e => {setLocation({...location, city: e.target.value}); console.log(location)}}></input>
-        <input type="text" value={location.state} onChange={e => {setLocation({...location, state: e.target.value})}}></input>
-        <button onClick={updateLatLong}>Get Weather</button>
+        
+        <div style={{display: 'flex'}}>
+          <input type="text" value={location.city} onChange={e => {setLocation({...location, city: e.target.value})}}></input>
+          <input type="text" value={location.state} onChange={e => {setLocation({...location, state: e.target.value})}}></input>
+          <button onClick={updateLatLong}>Get Weather</button>
+        </div>
+
         <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center'}}>
         <div style={{backgroundColor: 'gray', borderRadius: 20, padding: 15, alignItems: 'center', justifyContent: 'center'}} className="shadow">
           {mariettaWeather.time ? <h2 style={{fontSize: '1.5rem', marginTop: 10, paddingTop: 0, marginBottom: 0}}>Marietta, GA</h2> : <p style={{fontSize: '.8em', fontWeight: 700}}>Click below for today's weather</p>} 
