@@ -9,51 +9,23 @@ require('dotenv').config()
 
 export default function App() {
   const [location, setLocation] = useState({city: '', state: ''})
-  const [latLong, setLatLong] = useState({lat: '', long: ''})
   const [mariettaWeather, setMariettaWeather] = useState({})
-  const [getFiveDayOn, setGetFiveDayOn] = useState(false)
   const [fiveDayForecast, setFiveDayForecast] = useState({})
-
-
-  useEffect(() => {
-  console.log(latLong)}, [latLong])
-
-  const updateLatLong = async () => {
-    try {
-      const _location = (await getGeoData(location.city, location.state)).data.results[0].geometry.location
-      setLatLong({lat: _location.lat, long: _location.lng})
-    }
-    catch(err){
-      console.log(`My error code is ${err.status}.  I errored out bc ${err}`)
-    }
-  }
 
   //what happens when getlatlong fails? don't want weatherapi to call
 
   const getSummary = async () => {
     try {
-    const weather = (await getWeather(latLong.lat, latLong.long)).data.currently
-    setMariettaWeather(weather);
-    setGetFiveDayOn(true);
-    console.log(weather)
+      const _location = (await getGeoData(location.city, location.state)).data.results[0].geometry.location
+      const weather = (await getWeather(_location.lat, _location.lng)).data.currently
+      const fiveDayWeather = (await getWeather(_location.lat, _location.lng)).data.daily.data
+      setMariettaWeather(weather);
+      setFiveDayForecast(fiveDayWeather);
     }
     catch(err){
       console.log(`My error code is ${err.status}.  I errored out bc ${err}`)
     }
   }
-
-  const getFiveDay = async () => {
-    try {
-    const fiveDayWeather = (await getWeather(latLong.lat, latLong.long)).data.daily.data
-    setFiveDayForecast(fiveDayWeather);
-    setGetFiveDayOn(true);
-    }
-    catch(err){
-      console.log(`My error code is ${err.status}.  I errored out bc ${err}`)
-    }
-  }
-
-
 
   return (
     <div className="App">
@@ -66,18 +38,24 @@ export default function App() {
         <div style={{fontSize: '2rem', marginTop: -2, marginBottom: '1em', paddingTop: 0, color: '#317873'}}>Weather App</div>
         
         <div style={{display: 'flex'}}>
-          <input type="text" value={location.city} onChange={e => {setLocation({...location, city: e.target.value})}}></input>
+          <div>
+            <input type="text" value={location.city} onChange={e => {setLocation({...location, city: e.target.value})}}></input>
+            <p>Enter city</p>
+          </div>
+          <div>
           <input type="text" value={location.state} onChange={e => {setLocation({...location, state: e.target.value})}}></input>
-          <button onClick={updateLatLong}>Get Weather</button>
+          <p>Enter State</p>
+          </div>
+          <button onClick={getSummary}>Get Weather</button>
         </div>
 
         <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center'}}>
         <div style={{backgroundColor: 'gray', borderRadius: 20, padding: 15, alignItems: 'center', justifyContent: 'center'}} className="shadow">
-          {mariettaWeather.time ? <h2 style={{fontSize: '1.5rem', marginTop: 10, paddingTop: 0, marginBottom: 0}}>Marietta, GA</h2> : <p style={{fontSize: '.8em', fontWeight: 700}}>Click below for today's weather</p>} 
+          {mariettaWeather.time ? <h2 style={{fontSize: '1.5rem', marginTop: 10, paddingTop: 0, marginBottom: 0}}>{location.city}, {location.state}</h2> : <p style={{fontSize: '.8em', fontWeight: 700}}>Click below for today's weather</p>} 
           <div style={{marginTop: 0, marginBottom: '.8em'}}>{mariettaWeather.summary}</div>
           {mariettaWeather.icon ? <img className="mainWeatherIcon" src={require(`../images/${mariettaWeather.icon}.png`)} alt={mariettaWeather.icon} style={{margin: '0 auto'}}></img> : null}
           {mariettaWeather.temperature ? <div style={{marginTop: '.8em', paddingBottom: '.5em'}}>{Math.trunc(mariettaWeather.temperature)}°F</div> : null}
-        {getFiveDayOn ? <GetButtonAfter onClick={getFiveDay} >Show Five Day Forecast</GetButtonAfter> : <GetButton onClick={getSummary}>Let's Go!</GetButton>}
+          <GetButtonAfter>Clear</GetButtonAfter>
         </div>
         {fiveDayForecast[0] ? <FiveDay list={fiveDayForecast} /> : null}
         </div>
