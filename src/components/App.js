@@ -9,6 +9,7 @@ require('dotenv').config()
 
 export default function App() {
   const [location, setLocation] = useState({city: '', state: ''})
+  const [displayWeather, setDisplayWeather] = useState(false)
   const [mariettaWeather, setMariettaWeather] = useState({})
   const [fiveDayForecast, setFiveDayForecast] = useState({})
 
@@ -21,6 +22,7 @@ export default function App() {
       const fiveDayWeather = (await getWeather(_location.lat, _location.lng)).data.daily.data
       setMariettaWeather(weather);
       setFiveDayForecast(fiveDayWeather);
+      setDisplayWeather(true)
     }
     catch(err){
       console.log(`My error code is ${err.status}.  I errored out bc ${err}`)
@@ -39,7 +41,7 @@ export default function App() {
         
         <div style={{display: 'flex'}}>
           <div>
-            <input type="text" value={location.city} onChange={e => {setLocation({...location, city: e.target.value})}}></input>
+            <input style={{padding: '.4em .75em', borderRadius: '5em'}} type="text" value={location.city} onChange={e => {setLocation({...location, city: e.target.value})}}></input>
             <p>Enter city</p>
           </div>
           <div>
@@ -49,7 +51,7 @@ export default function App() {
           <button onClick={getSummary}>Get Weather</button>
         </div>
 
-        <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center'}}>
+        {displayWeather ? <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center'}}>
         <div style={{backgroundColor: 'gray', borderRadius: 20, padding: 15, alignItems: 'center', justifyContent: 'center'}} className="shadow">
           {mariettaWeather.time ? <h2 style={{fontSize: '1.5rem', marginTop: 10, paddingTop: 0, marginBottom: 0}}>{location.city}, {location.state}</h2> : <p style={{fontSize: '.8em', fontWeight: 700}}>Click below for today's weather</p>} 
           <div style={{marginTop: 0, marginBottom: '.8em'}}>{mariettaWeather.summary}</div>
@@ -58,7 +60,7 @@ export default function App() {
           <GetButtonAfter>Clear</GetButtonAfter>
         </div>
         {fiveDayForecast[0] ? <FiveDay list={fiveDayForecast} /> : null}
-        </div>
+        </div> : null}
     </div>
   );
 }
