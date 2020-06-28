@@ -1,6 +1,6 @@
 ## Project Name & Description
 
-ShaunDays 
+####ShaunDays 
 
 A React application used to find today's weather and 5-day forecast using API Connections to Google Maps and Dark Sky Weather.  App built using React and styled with Styled Components and CSS.
 
