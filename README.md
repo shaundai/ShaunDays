@@ -21,8 +21,9 @@ This was a week-long side project built to help me practice the fundamentals of 
 This app can accept misspelled US city names and return the closest match found in Google Maps.
 
 Some key learnings:
+
     * Async/await
-    *  Promises/Promise.all
+    * Promises/Promise.all
     * Familiarizing myself with API Documentation
     * How (and why) to safely protect my API key either using a .gitignore or .env file
     * Using GET to pull back information from an API
