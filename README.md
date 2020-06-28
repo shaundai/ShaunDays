@@ -22,7 +22,7 @@ This app can accept misspelled US city names and return the closest match found 
 
 Some key learnings:
     * Async/await
-    * Promises/Promise.all
+    *  Promises/Promise.all
     * Familiarizing myself with API Documentation
     * How (and why) to safely protect my API key either using a .gitignore or .env file
     * Using GET to pull back information from an API
