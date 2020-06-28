@@ -11,9 +11,7 @@
 }
 
 .shadow {
-  -moz-box-shadow:    inset 0 0 10px #000000;
-  -webkit-box-shadow: inset 0 0 10px #000000;
-  box-shadow:         inset 0 0 5px #000000;
+  box-shadow: inset 0 0 5px #000000;
 }
 
 .mainWeatherIcon {
@@ -26,7 +24,9 @@
 }
 
 .fiveDayWeatherIcon {
-  margin: auto .5em;
-  height: 1.5em;
-  width: 1.5em;
+  margin: auto .4em;
+  height: 1.4em;
+  width: 1.4em;
+  align-self: 'flex-end';
+  justify-self: 'flex-end';
 }
