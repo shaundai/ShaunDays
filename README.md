@@ -10,6 +10,9 @@ This project is currently in development. Complete UI and API connections.  "Bes
 Still remaining to complete: App will ultimately be able to handle wider range of possibilities for errors.  For example, alerts for when a user inputs a city name that the google api does not recognize.
 
 ## Project Screen Shots
+![Main screen screenshot](./public/screenshot1.png?raw=true "Title")
+![Search for weather screenshot](./public/screenshot2.png?raw=true "Title")
+
 
 ## Reflection
 
