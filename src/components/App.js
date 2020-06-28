@@ -9,6 +9,7 @@ require('dotenv').config()
 
 export default function App() {
   const [location, setLocation] = useState({city: '', state: ''})
+  const [formattedLocation, setFormattedLocation] = useState({city: '', state: ''})
   const [displayWeather, setDisplayWeather] = useState(false)
   const [mariettaWeather, setMariettaWeather] = useState({})
   const [fiveDayForecast, setFiveDayForecast] = useState({})
@@ -17,16 +18,22 @@ export default function App() {
 
   const getSummary = async () => {
     try {
-      const _location = (await getGeoData(location.city, location.state)).data.results[0].geometry.location
-      const weather = (await getWeather(_location.lat, _location.lng)).data.currently
-      const fiveDayWeather = (await getWeather(_location.lat, _location.lng)).data.daily.data
+      const _location = (await getGeoData(location.city, location.state)).data.results[0]
+      const weather = (await getWeather(_location.geometry.location.lat, _location.geometry.location.lng)).data.currently
+      const fiveDayWeather = (await getWeather(_location.geometry.location.lat, _location.geometry.location.lng)).data.daily.data
       setMariettaWeather(weather);
       setFiveDayForecast(fiveDayWeather);
-      setDisplayWeather(true)
+      setFormattedLocation({city: _location.address_components[0].long_name, state: _location.address_components[2].short_name})
+      setDisplayWeather(true);
     }
     catch(err){
       console.log(`My error code is ${err.status}.  I errored out bc ${err}`)
     }
+  }
+
+  const clearInfo = () => {
+    setLocation({city: '', state: ''});
+    setDisplayWeather(false);
   }
 
   return (
@@ -53,11 +60,11 @@ export default function App() {
 
         {displayWeather ? <div style={{display: 'flex', flexDirection: 'row', width: '6em', justifyContent: 'center', width: '100%'}}>
         <div style={{backgroundColor: 'gray', borderRadius: 20, padding: 15, alignItems: 'center', justifyContent: 'center', width: '20%'}} className="shadow">
-          {mariettaWeather.time ? <h2 style={{fontSize: '1.5rem', marginTop: 10, paddingTop: 0, marginBottom: 0}}>{location.city}, {location.state}</h2> : <p style={{fontSize: '.8em', fontWeight: 700}}>Click below for today's weather</p>} 
+          {mariettaWeather.time ? <h2 style={{fontSize: '1.5rem', marginTop: 10, paddingTop: 0, marginBottom: 0}}>{formattedLocation.city}, {formattedLocation.state}</h2> : <p style={{fontSize: '.8em', fontWeight: 700}}>Click below for today's weather</p>} 
           <div style={{marginTop: 0, marginBottom: '.8em'}}>{mariettaWeather.summary}</div>
           {mariettaWeather.icon ? <img className="mainWeatherIcon" src={require(`../images/${mariettaWeather.icon}.png`)} alt={mariettaWeather.icon} style={{margin: '0 auto'}}></img> : null}
           {mariettaWeather.temperature ? <div style={{marginTop: '.8em', paddingBottom: '.5em'}}>{Math.trunc(mariettaWeather.temperature)}°F</div> : null}
-          <GetButtonAfter>Clear</GetButtonAfter>
+          <GetButtonAfter onClick={clearInfo}>Clear</GetButtonAfter>
         </div>
         {fiveDayForecast[0] ? <FiveDay list={fiveDayForecast} /> : null}
         </div> : null}
