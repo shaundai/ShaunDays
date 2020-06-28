@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import './App.css';
 import styled from 'styled-components';
@@ -58,7 +58,7 @@ export default function App() {
           <GetButtonAfter onClick={getSummary}>Let's go!</GetButtonAfter>
         </div>
 
-        {displayWeather ? <div style={{display: 'flex', flexDirection: 'row', width: '6em', justifyContent: 'center', width: '100%'}}>
+        {displayWeather ? <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', width: '100%'}}>
         <div style={{backgroundColor: 'gray', borderRadius: 20, padding: 15, alignItems: 'center', justifyContent: 'center', width: '20%'}} className="shadow">
           {mariettaWeather.time ? <h2 style={{fontSize: '1.5rem', marginTop: 10, paddingTop: 0, marginBottom: 0}}>{formattedLocation.city}, {formattedLocation.state}</h2> : <p style={{fontSize: '.8em', fontWeight: 700}}>Click below for today's weather</p>} 
           <div style={{marginTop: 0, marginBottom: '.8em'}}>{mariettaWeather.summary}</div>
