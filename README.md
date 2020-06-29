@@ -4,6 +4,10 @@
 
 A React application used to find today's weather and 5-day forecast in any US city using API Connections to Google Maps and Dark Sky Weather.  App built using React and styled with Styled Components and CSS.
 
+#### Live Project
+
+Find the project live in action here: http://shaundays-weather.surge.sh/
+
 ## Project Status
 
 This project is currently in development. Complete UI and API connections.  "Best case scenarios" are complete.
