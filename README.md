@@ -8,8 +8,6 @@ A React application used to find today's weather and 5-day forecast in any US ci
 
 [Find the project live in action here](http://shaundays-weather.surge.sh/)
 
-**Note**: I have not yet built a proxy for the API calls in this app.  If you want it to work, run it from Google Chrome.  You will need to first download the [CORS Unblock](https://www.google.com/search?q=cors+unblock+google+chrome+app&oq=cors&aqs=chrome.1.69i57j69i59j69i60.2251j0j7&sourceid=chrome&ie=UTF-8) Chrome Extension and turn it on by clicking its icon on your Chrome bookmarks bar.
-
 ## Project Status
 
 This project is currently in development. Complete UI and API connections.  "Best case scenarios" are complete.
